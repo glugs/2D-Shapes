@@ -1,4 +1,4 @@
-///Global Variables
+//Global Variables
 PVector leftEye;
 PVector rightEye;
 int reset, smallerDisplayDimension, mouthOpen;
@@ -7,47 +7,41 @@ float faceX, faceY, faceDiameter;
 float leftEyeX, leftEyeY, rightEyeX, rightEyeY, eyeDiameter;
 float mouthX1, mouthY1, mouthX2, mouthY2;
 float xNose1, yNose1, xNose2, yNose2, xNose3, yNose3;
-float imageX, imageY, imageWidth, imageHeigth, imageWidthRatio=0.0, imageHeightRatio=0.0;
-float largerDimension, smallerDimension;
-PImage pic;
-Boolean widthLarger=false, heightLarger=false;
+String title = "Bawk! Chicken Pox.";
+float titleX, titleY, titleWidth, titleHeight;
+PFont titleFont;
+color green=#144607, resetDefaultInk=#FFFFFF;
+
+//
+//float rectXPic1, rectYPic1, rectWidthPic1, rectHeightPic1;
+//PImage pic1;
+
+
 //
 void setup() 
 {
+   background(#96F0ED);
    leftEye = new PVector(displayWidth*.38, displayHeight*.28);
  rightEye = new PVector(displayWidth*.57, displayHeight*.28);
 //
-pic = loadImage("f3a0c38b4ceb4f359fea2b43ab32a23c.jpg"); //450x470
-int picWidth = 450; //Mine is 800, do not copy this!!!
-int picHeight = 470; //Mine is 600, do not copy this!!!
-if ( picWidth >= picHeight ) {
-  largerDimension = picWidth;
-  smallerDimension = picHeight;
-  widthLarger = true;
-} else {
-  largerDimension = picHeight;
-  smallerDimension = picWidth;
-  heightLarger = true;
-}//End Dimension Comparision
-println(smallerDimension, largerDimension, widthLarger, heightLarger); //Verifying Variable details
-//Note: single line IFs can be summarized to IF-ELSE or IF-ELSEIF-ELSE
-if ( widthLarger == true ) imageWidthRatio = largerDimension / largerDimension;
-if ( widthLarger == true ) imageHeightRatio = smallerDimension / largerDimension;
-if ( heightLarger == true ) imageHeightRatio = largerDimension / largerDimension;
-if ( heightLarger == true ) imageWidthRatio = smallerDimension / largerDimension;
-println(imageWidthRatio, imageHeightRatio, smallerDimension/largerDimension, 600.0/800.0); //Verify variable values
+//Display Geometry, Display orientation: landscape, portrait, or square
+  fullScreen(); //size (500, 600);  //displayWidth & displayHeight
+  println(displayWidth, displayHeight);
+  //Population
+  titleX = displayWidth*1/5;
+  titleY = displayHeight*1/30;
+  titleWidth = displayWidth*3/5; //Rect ends at 4/5's of width
+  titleHeight = displayHeight*1/10; //Rect ends at 2/10's of height
+  //
+  //Fonts from OS (Operating System)
+  //String[] fontList = PFont.list(); //To list all fonts available on OS
+  //printArray(fontList); //For listing all possible fonts to choose from, then createFont
+  titleFont = createFont("Baskerville old face", 58); //Verify the font exists in ProcessingJava
+  // Tools / Create Font / Find Font / Do not press "OK", known bug
+  //
+  
 //
-imageX = width*0;
-imageY = height*0;
-imageWidth = width*imageWidthRatio;
-imageHeigth = height*imageHeightRatio;
-if ( imageWidth > width ) println("ERROR: Image is too wide"); //Simple Display Checker
-if ( imageHeigth > height ) println("ERROR: Image is too high"); //Simple Display Checker
 
-//
-//Rectangle Layout
-rect(imageX, imageY, imageWidth, imageHeigth);
-image(pic, imageX, imageY, imageWidth, imageHeigth);
 
 
   //Display Geometry
@@ -56,19 +50,20 @@ fullScreen(); //size(); displayWidth, displayHeight
 println (width, height, displayWidth, displayHeight); //Verification of values
 int appWidth = width, appHeight = height; //Swap with displayWidth, displayHeight for testing
 println(appWidth, appHeight);
+
 //
 //Display Orientation: a few comparisons for IFs
 //Computer tells us the orientation, go
 String orientation = ( displayWidth >= displayHeight ) ? "Landscape or Square": "Portrait"; 
 println("Display Orientation:", orientation); //Verify Veriables
 if ( orientation=="Portrait" ) println("Turn your phun");
-/*
+
 if ( orientation=="Landscape or Square") 
 {
   //Empty IF
 } else { 
   println("Turn your phun");
-} //FUN */
+} //FUN 
 //
 //Variable Population: notice using appWidth & appHeight to move between size() & fullScreen()
 smallerDisplayDimension = appHeight; //ALWAYS in Landscape
@@ -106,25 +101,29 @@ ellipse(faceX, faceY, faceDiameter, faceDiameter);
 
 } //End setup
 //
-void draw() 
-{
-  //background(200);
- // background(#000000);
+void draw() {
+
+  
+
+ 
   PVector mouseVector = new PVector(mouseX, mouseY);
 
-  PVector leftPupil = leftEye.copy().add(mouseVector.copy().sub(leftEye).setMag(20)) ;
-  PVector rightPupil = rightEye.copy().add(mouseVector.copy().sub(rightEye).setMag(20));
+  PVector leftPupil = leftEye.copy().add(mouseVector.copy().sub(leftEye).setMag(30)) ;
+  PVector rightPupil = rightEye.copy().add(mouseVector.copy().sub(rightEye).setMag(30));
  //
 
- smooth();
-noStroke();
-fill(#D80B0B);
-beginShape();
-vertex(50, 15);
-bezierVertex(50, -5, 10, 5, 50, 40);
-vertex(50, 15);
-bezierVertex(50, -5, 10, 5, 50, 40);
-endShape();
+
+//
+ //smooth();
+//noStroke();
+//fill(#D80B0B);
+//beginShape();
+//vertex(50, 15);
+//bezierVertex(50, -5, 10, 5, 50, 40);
+//vertex(50, 15);
+//bezierVertex(50, -5, 10, 5, 50, 40);
+//endShape();
+//
 
 //
 //Measle
@@ -184,6 +183,17 @@ strokeWeight(reset); //reset to 1 pixel
 //
 fill(#E38ECE);
  arc(1370, 1335, 1050, 900, 0, 3.14);
+ //Layout our text space and typographical features
+ 
+  //
+ 
+  rect(titleX, titleY, titleWidth, titleHeight);
+ fill(green); //Ink, hexidecimal copied from Color Selector
+ textAlign(CENTER, CENTER); //Align X&Y, see Processing.org / Reference
+ //Values: [ LEFT | CENTER | RIGHT ] & [ TOP | CENTER | BOTTOM | BASEMENT ]
+ textFont(titleFont, 150); //Change the number until it fits
+ text(title, titleX, titleY, titleWidth, titleHeight);
+ fill(resetDefaultInk);
 } //End draw
 //
 void keyPressed() {} //End keypressed
